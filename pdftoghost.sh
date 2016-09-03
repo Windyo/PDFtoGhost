@@ -54,7 +54,7 @@ function init
 
 function massdelete
 {
-  declare -a PostsToDelete=`curl --header "Authorization: Bearer $BearerToken" $BlogAdress/ghost/api/v0.1/posts/?filter=\(author_id:$Author\) | jq '.posts[] | .id'`
+  declare -a PostsToDelete=`curl --header "Authorization: Bearer $BearerToken" $BlogAdress/ghost/api/v0.1/posts/?limit=all\&filter=\(author_id:$Author\) | jq '.posts[] | .id'`
   echo "Posts to Delete ids: $PostsToDelete"
   for ThisPostId in $PostsToDelete
     do
@@ -141,7 +141,7 @@ function prepposts
 function masspublish
 {
   #Publish all the previously drafted posts
-  declare -a PostsToPublish=`curl --header "Authorization: Bearer $BearerToken" $BlogAdress/ghost/api/v0.1/posts/?filter=\(status:draft\) | jq '.posts[] | .id'`
+  declare -a PostsToPublish=`curl --header "Authorization: Bearer $BearerToken" $BlogAdress/ghost/api/v0.1/posts/?limit=all\&filter=\(status:draft\) | jq '.posts[] | .id'`
   echo "Posts to Publish ids: $PostsToPublish"
   for ThisPostId in $PostsToPublish
     do
